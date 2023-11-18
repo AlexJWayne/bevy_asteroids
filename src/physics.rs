@@ -1,11 +1,23 @@
+use std::f32::consts::PI;
+
 use bevy::prelude::*;
+use rand::random;
 
 #[derive(Component)]
 pub struct Velocity(pub Vec2);
 
+impl Velocity {
+    pub fn from_random_direction(min_speed: f32, max_speed: f32) -> Velocity {
+        let direction = Vec2::from_angle(random::<f32>() * PI * 2.0);
+        let speed = min_speed + random::<f32>() * (max_speed - min_speed);
+        Velocity(direction * speed)
+    }
+}
+
 #[derive(Component)]
 pub struct AngularMomentum(pub f32);
 
+#[derive(Component)]
 pub struct Diameter(pub f32);
 
 pub fn translate_moveable_objects(
